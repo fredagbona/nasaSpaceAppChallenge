@@ -1,194 +1,193 @@
 <?php
 
-    include "database.php";
+include "database.php";
 
-    class userEntity{
-        
-        private $matricule;
-        private $nom;
-        private $prenom;
-        private $sexe;
-        private $dateDeNaissance;
-        private $telephone;
+class UserEntity {
+    private $id_users;
+    private $fullname;
+    private $description;
+    private $phoneNumber;
+    private $sexe;
+    private $social_media;
+    private $stars;
+    private $skills;
+    private $avatar_url;
+    private $date_creation;
 
+    public function __construct($id_users = '', $fullname = '', $description = '', $phoneNumber = '', $sexe = '', $social_media = '', $stars = '', $skills = '', $avatar_url = '', $date_creation = '') {
+        $this->id_users = $id_users;
+        $this->fullname = $fullname;
+        $this->description = $description;
+        $this->phoneNumber = $phoneNumber;
+        $this->sexe = $sexe;
+        $this->social_media = $social_media;
+        $this->stars = $stars;
+        $this->skills = $skills;
+        $this->avatar_url = $avatar_url;
+        $this->date_creation = $date_creation;
+    }
 
-        /**
-         * @param string $matricule -> Numero matricule de l'étudiant
-         * @param string $nom -> Nom de l'etudiant
-         * @param string $prenom -> Prenom de l'étudiant
-         * @param string $sexe -> Sexe de l'étudiant
-         * @param string $dateDeNaissance -> Date de Naissance de l'étudiant
-         * @param number $telephone -> Numero de téléphone de l'étudiant
-         */
-        public function __construct($matricule = '', $nom = '', $prenom = '', $sexe = '', $dateDeNaissance = '', $telephone = 0)
-        {
-            $this->matricule = $matricule;
-            $this->nom = $nom;
-            $this->prenom = $prenom;
-            $this->sexe = $sexe;
-            $this->dateDeNaissance = $dateDeNaissance;
-            $this->telephone = $telephone;
-        }
+    public function getIdUsers() {
+        return $this->id_users;
+    }
 
-        /**
-         * @return string $matricule
-         */
-        public function getMatricule(){
-            return $this->matricule;
-        }
+    public function setIdUsers($id_users) {
+        $this->id_users = $id_users;
+    }
 
-        /**
-         * @param string $matricule
-         */
-        public function setMatricule($matricule){
-            $this->matricule = $matricule;
-        }
+    public function getFullname() {
+        return $this->fullname;
+    }
 
-        /**
-         * @return string $nom
-         */
-        public function getNom(){
-            return $this->nom;
-        }
+    public function setFullname($fullname) {
+        $this->fullname = $fullname;
+    }
 
-        /**
-         * @param string $nom
-         */
-        public function setNom($nom){
-            $this->nom = $nom;
-        }
+    public function getDescription() {
+        return $this->description;
+    }
 
-        /**
-         * @return string $prenom
-         */
-        public function getPrenom(){
-            return $this->prenom;
-        }
+    public function setDescription($description) {
+        $this->description = $description;
+    }
 
-        /**
-         * @param string $prenom
-         */
-        public function setPrenom($prenom){
-            $this->prenom = $prenom;
-        }
+    public function getPhoneNumber() {
+        return $this->phoneNumber;
+    }
 
-        /**
-         * @return string $sexe
-         */
-        public function getSexe(){
-            return $this->sexe;
-        }
+    public function setPhoneNumber($phoneNumber) {
+        $this->phoneNumber = $phoneNumber;
+    }
 
-        /**
-         * @param string $sexe
-         */
-        public function setSexe($sexe){
-            $this->sexe = $sexe;
-        }
+    public function getSexe() {
+        return $this->sexe;
+    }
 
-        /**
-         * @return date $dateDeNaissance
-         */
-        public function getDateDeNaissance(){
-            return $this->dateDeNaissance;
-        }
+    public function setSexe($sexe) {
+        $this->sexe = $sexe;
+    }
 
-        /**
-         * @param date $dateDeNaissance
-         */
-        public function setDateDeNaissance($dateDeNaissance){
-            $this->dateDeNaissance = $dateDeNaissance;
-        }
+    public function getSocialMedia() {
+        return $this->social_media;
+    }
 
-        /**
-         * @return number $telephone
-         */
-        public function getTelephone(){
-            return $this->telephone;
-        }
+    public function setSocialMedia($social_media) {
+        $this->social_media = $social_media;
+    }
 
-        /**
-         * @param number $telephone
-         */
-        public function setTelephone($telephone){
-            $this->telephone = $telephone;
-        }
+    public function getStars() {
+        return $this->stars;
+    }
 
-        public function save(){
-            global $connexion;
-            $studentSaveQuery = "INSERT INTO Students (matricule, nom, prenom, sexe, dateDeNaissance, telephone) VALUES(?, ?, ?, ?, ?, ?)";
-            $studentSave = $connexion->prepare($studentSaveQuery);
-            if(
-                $studentSave->execute(array("$this->matricule",
-                "$this->nom", 
-                "$this->prenom", 
-                "$this->sexe", 
-                "$this->dateDeNaissance", 
-                "$this->telephone"
-                ))
-            ){
-                return true;
-            }else{
-                return false;
-            }
-            
-        }
+    public function setStars($stars) {
+        $this->stars = $stars;
+    }
 
-        public function findByMatricule(){
-            global $connexion;
-            $findUserQuery = "SELECT * FROM Students WHERE matricule = ?";
-            $findUser = $connexion->prepare($findUserQuery);
-            $findUser->execute(array($this->matricule));
-            $studentFound = $findUser->fetch();
-            $this->setMatricule($studentFound['matricule']);
-            $this->setNom($studentFound['nom']);
-            $this->setPrenom($studentFound['prenom']);
-            $this->setSexe($studentFound['sexe']);
-            $this->setDateDeNaissance($studentFound['dateDeNaissance']);
-            $this->setTelephone($studentFound['telephone']);
-        }
+    public function getSkills() {
+        return $this->skills;
+    }
 
-        public function findAll() {
-            global $connexion;
-            $findStudentsQuery = "SELECT * FROM Students ORDER BY matricule DESC";
-            $findStudents = $connexion->query($findStudentsQuery);
-            $students = $findStudents->fetchAll();
-            return $students;
-        }
+    public function setSkills($skills) {
+        $this->skills = $skills;
+    }
 
-        public function update($matricule){
-            global $connexion;
-            $updateUserQuery = "UPDATE Students SET matricule = ?, nom = ?, prenom = ?, sexe = ?, dateDeNaissance = ?, telephone = ? WHERE matricule = ?";
-            $updateUser = $connexion->prepare($updateUserQuery);
-            if($updateUser->execute(array("$this->matricule", 
-            "$this->nom", 
-            "$this->prenom", 
-            "$this->sexe",
-            "$this->dateDeNaissance", 
-            "$this->telephone",
-            $matricule
-            ))){
-                return true;
-            }else{
-                return false;
-            }
-        }
+    public function getAvatarUrl() {
+        return $this->avatar_url;
+    }
 
-        public function delete($matricule){
-            global $connexion;
-            $deleteUserQuery = "DELETE FROM Students WHERE matricule = ?";
-            $deleteUser = $connexion->prepare($deleteUserQuery);
-           if( $deleteUser->execute(array("$matricule"))){
+    public function setAvatarUrl($avatar_url) {
+        $this->avatar_url = $avatar_url;
+    }
+
+    public function getDateCreation() {
+        return $this->date_creation;
+    }
+
+    public function setDateCreation($date_creation) {
+        $this->date_creation = $date_creation;
+    }
+
+    public function save() {
+        global $connexion;
+        $userSaveQuery = "INSERT INTO Users (fullname, description, phoneNumber, sexe, social_media, stars, skills, avatar_url, date_creation) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $userSave = $connexion->prepare($userSaveQuery);
+        if(
+            $userSave->execute(array("$this->id_users",
+            "$this->fullname", 
+            "$this->description", 
+            "$this->phoneNumber", 
+            "$this->sexe", 
+            "$this->social_media",
+            "$this->skills",
+            "$this->avatr_url",
+            "$this->date_creation"
+
+            ))
+        ){
             return true;
-           }else{
+        }else{
             return false;
-           }
         }
+        
+    }
+    public function findByIdUsers($id_users) {
+        global $connexion;
+        $query = "SELECT * FROM Users WHERE id_users = ?";
+        $findUsers = $connexion->prepare($finduserQuery);
+        $findUsers->execute(array($this->id_users));
+        $userFound = $findusers->fetch();
+        $this->setIdUsers($userFound['id_users']);
+        $this->setFullname($userFound['fullname']);
+        $this->setDescription($userFound['description']);
+        $this->setPhoneNumber($userFound['phoneNumber']);
+        $this->setSexe($userFound['sexe']);
+        $this->setSocialMedia($userFound['social_media']);
+        $this->setSkills($userFound['skills']);
+        $this->setAvatarUrl($userFound['avatar_url']);
+        $this->setDateCreation($userFound['date_creation']);
+    }
+    public function findAll() {
+        global $connexion;
+            $findUsersQuery = "SELECT * FROM Users ORDER BY id_users DESC";
+            $findUsers = $connexion->query($findUsersQuery);
+            $users= $findUsers->fetchAll();
+            return $users;
+        
+    }
 
-
+    public function update($id_users){
+        global $connexion;
+        $updateUsersQuery = "UPDATE Users SET id_users = ?, fullname = ?, description = ?, phoneNumber = ?, sexe = ?, social_media = ?, stars = ?, skills = ?,  avatar_url = ?, date_creation = ?  WHERE id_users = ?";
+        $updateUsers = $connexion->prepare($updateUsersQuery);
+        if($updateUsers->execute(array("$this->id_users", 
+        "$this->fullname", 
+        "$this->description", 
+        "$this->phoneNumber", 
+        "$this->sexe", 
+        "$this->social_media",
+        "$this->skills",
+        "$this->avatr_url",
+        "$this->date_creation",
+        $id_users
+        ))){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
+    public function delete($id_users){
+        global $connexion;
+        $deleteUsersQuery = "DELETE FROM Users WHERE id_users = ?";
+        $deleteUsers = $connexion->prepare($deleteUsersQuery);
+       if( $deleteUsers->execute(array("$id_users"))){
+        return true;
+       }else{
+        return false;
+       }
+    }
 
+}
 
 ?>

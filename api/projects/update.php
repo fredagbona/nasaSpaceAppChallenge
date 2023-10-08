@@ -5,8 +5,8 @@
     
     if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     $body = json_decode(file_get_contents("php://input"));
-    $student = new studentEntity($body->matricule, $body->nom, $body->prenom, $body->sexe, $body->dateDeNaissance, $body->telephone);
-    $matricule = isset($_GET['matricule']) ? $_GET['matricule'] : die(json_encode(array("error" => "Matricule non fourni")));
+    $project = new projectEntity($body->matricule, $body->nom, $body->prenom, $body->sexe, $body->dateDeNaissance, $body->telephone);
+    $id_project = isset($_GET['id_project']) ? $_GET['id_project'] : die(json_encode(array("error" => "Matricule non fourni")));
     
     if($student->update($matricule)){
         http_response_code(200);
