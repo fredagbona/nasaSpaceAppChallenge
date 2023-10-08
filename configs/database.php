@@ -2,7 +2,7 @@
 $username = 'root';
 $host = 'localhost';
 $password = '';
-$dsn = 'mysql:host=localhost;dbname=student_app;charset=utf8';
+$dsn = 'mysql:host=localhost;dbname=spacebd;charset=utf8';
 
 try
 {
