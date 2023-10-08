@@ -2,7 +2,7 @@
 
     include "database.php";
 
-    class studentEntity{
+    class userEntity{
         
         private $matricule;
         private $nom;

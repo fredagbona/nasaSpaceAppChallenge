@@ -4,7 +4,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = json_decode(file_get_contents("php://input"));
-    $student = new studentEntity($body->matricule, $body->nom, $body->prenom, $body->sexe, $body->dateDeNaissance, $body->telephone);
+    $student = new userEntity($body->matricule, $body->nom, $body->prenom, $body->sexe, $body->dateDeNaissance, $body->telephone);
     
     if($student->save()){
         http_response_code(200);
